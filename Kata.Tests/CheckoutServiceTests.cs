@@ -122,8 +122,9 @@ public class CheckoutServiceTests
     }
 
     [Test]
-    private void Remove_Non_Existent_Item_Does_Nothing()
+    public void Remove_Non_Existent_Item_Does_Nothing()
     {
         checkoutService.RemoveItem("A");
+        Assert.That(checkoutService.Total(), Is.EqualTo(0));
     }
 }
