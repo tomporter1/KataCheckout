@@ -36,11 +36,56 @@ public class BuyXGetYFreeTests
     }
     
     [Test]
+    public void BuyXGetYFree_Multiple_Offers_Applies()
+    {
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        Assert.That(checkoutService.Total(), Is.EqualTo(20 * 9));
+    }
+    
+    [Test]
+    public void BuyXGetYFree_Multiple_Offers_Plus_Extra_Applies()
+    {
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        
+        Assert.That(checkoutService.Total(), Is.EqualTo((20 * 9) + 40));
+    }
+    
+    [Test]
     public void BuyXGetYFree_Not_Enough_Items_To_Apply()
     {
         checkoutService.ScanItem("C");
         checkoutService.ScanItem("C");
-        Assert.That(checkoutService.Total(), Is.EqualTo(20 * 3));
+        Assert.That(checkoutService.Total(), Is.EqualTo(20 * 2));
     }
 
     [Test]
