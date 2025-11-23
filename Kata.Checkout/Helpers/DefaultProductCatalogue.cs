@@ -6,12 +6,12 @@ public class DefaultProductCatalogue
 {
     public static IProductCatalogue MakeDefault()
     {
-        return new ProductCatalogue(new Dictionary<string, IItem>
+        return new ProductCatalogue(new Dictionary<string, IProductPrice>
         {
-            { "A", new MultiBuyItem(50, 3, 130) },
-            { "B", new MultiBuyItem(30, 2, 45) },
+            { "A", new MultiBuyProductPrice(50, 3, 130) },
+            { "B", new MultiBuyProductPrice(30, 2, 45) },
             { "C", new BuyXGetYFree(20, 3, 1) },
-            { "D", new Item(15) }
+            { "D", new ProductPrice(15) }
         });
     }
 }

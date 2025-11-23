@@ -5,8 +5,8 @@ using NUnit.Framework;
 
 namespace Kata.Tests.Discounts;
 
-// Item   Unit      Special
-//        Price     Price
+// ProductPrice   Unit      Special
+//        ProductPrice     ProductPrice
 // --------------------------
 // A     50       3 for 130
 // B     30       2 for 45

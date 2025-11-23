@@ -1,13 +1,13 @@
 ﻿namespace Kata.Checkout.Items;
 
-public class ProductCatalogue(Dictionary<string, IItem> items) : IProductCatalogue
+public class ProductCatalogue(Dictionary<string, IProductPrice> items) : IProductCatalogue
 {
     public bool Contains(string itemName) => items.ContainsKey(itemName);
 
-    public IItem GetItem(string itemName)
+    public IProductPrice GetItem(string itemName)
     {
-        if (items.TryGetValue(itemName, out IItem item))
+        if (items.TryGetValue(itemName, out IProductPrice item))
             return item;
-        throw new KeyNotFoundException($"Item {itemName} not found in catalogue");
+        throw new KeyNotFoundException($"ProductPrice {itemName} not found in catalogue");
     }
 }

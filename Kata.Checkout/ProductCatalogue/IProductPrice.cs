@@ -1,7 +1,6 @@
 ﻿namespace Kata.Checkout.Items;
 
-public interface IItem
+public interface IProductPrice
 {
-    public string Name { get; }
     public int CalculatePrice(int quantity) => 0;
 }

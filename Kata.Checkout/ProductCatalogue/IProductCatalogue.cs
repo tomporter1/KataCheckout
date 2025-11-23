@@ -2,6 +2,6 @@
 
 public interface IProductCatalogue
 {
-    IItem GetItem(string itemName);
+    IProductPrice GetItem(string itemName);
     bool Contains(string itemName);
 }

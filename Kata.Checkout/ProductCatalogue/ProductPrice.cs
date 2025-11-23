@@ -1,9 +1,7 @@
 ﻿namespace Kata.Checkout.Items;
 
-public class Item(int unitPrice) : IItem
+public class ProductPrice(int unitPrice) : IProductPrice
 {
-    public string Name { get; }
-
     public virtual int CalculatePrice(int quantity)
     {
         return unitPrice * quantity;

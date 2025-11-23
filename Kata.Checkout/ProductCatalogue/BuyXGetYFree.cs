@@ -1,9 +1,9 @@
 ﻿namespace Kata.Checkout.Items;
 
 /// <summary>
-/// If the customer buys X of this item, they get Y free. For simplicity if they only scan X items and no more, then this won't include the free items.
+/// If the customer buys X of this productPrice, they get Y free. For simplicity if they only scan X items and no more, then this won't include the free items.
 /// </summary>
-public class BuyXGetYFree(int basePrice, int buyQuantity, int freeQuantity) : Item(basePrice)
+public class BuyXGetYFree(int basePrice, int buyQuantity, int freeQuantity) : ProductPrice(basePrice)
 {
     public override int CalculatePrice(int quantity)
     {

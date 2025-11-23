@@ -31,8 +31,8 @@ public class CheckoutService(IProductCatalogue products) : ICheckoutService
         int total = 0;
         foreach ((string itemName, int quantity) in _items.Where(i => _products.Contains(i.Key)))
         {
-            IItem item = _products.GetItem(itemName);
-            total += item.CalculatePrice(quantity);
+            IProductPrice productPrice = _products.GetItem(itemName);
+            total += productPrice.CalculatePrice(quantity);
         }
         return total;
     }

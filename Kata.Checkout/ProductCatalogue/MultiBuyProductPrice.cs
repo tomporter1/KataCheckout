@@ -1,6 +1,6 @@
 ﻿namespace Kata.Checkout.Items;
 
-public class MultiBuyItem(int unitPrice, int discountQuantity, int discountPrice) : Item(unitPrice)
+public class MultiBuyProductPrice(int unitPrice, int discountQuantity, int discountPrice) : ProductPrice(unitPrice)
 {
     public override int CalculatePrice(int quantity)
     {
