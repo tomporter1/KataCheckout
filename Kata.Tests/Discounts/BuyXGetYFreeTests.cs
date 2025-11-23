@@ -34,6 +34,14 @@ public class BuyXGetYFreeTests
         checkoutService.ScanItem("C");
         Assert.That(checkoutService.Total(), Is.EqualTo(20 * 3));
     }
+    
+    [Test]
+    public void BuyXGetYFree_Not_Enough_Items_To_Apply()
+    {
+        checkoutService.ScanItem("C");
+        checkoutService.ScanItem("C");
+        Assert.That(checkoutService.Total(), Is.EqualTo(20 * 3));
+    }
 
     [Test]
     public void BuyXGetYFree_Not_Applies()
