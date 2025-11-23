@@ -153,7 +153,6 @@ public class CheckoutServiceTests
     [Test]
     public void Offer_With_Extra_Items()
     {
-        // 3 for 130 + 1 at 50
         checkoutService.ScanItem("A");
         checkoutService.ScanItem("A");
         checkoutService.ScanItem("A");

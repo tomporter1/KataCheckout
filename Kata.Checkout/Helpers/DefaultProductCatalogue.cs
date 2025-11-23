@@ -10,7 +10,7 @@ public class DefaultProductCatalogue
         {
             { "A", new MultiBuyItem(50, 3, 130) },
             { "B", new MultiBuyItem(30, 2, 45) },
-            { "C", new Item(20) },
+            { "C", new BuyXGetYFree(20, 3, 1) },
             { "D", new Item(15) }
         });
     }
