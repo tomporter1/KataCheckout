@@ -9,23 +9,19 @@ public class CheckoutService(IProductCatalogue products) : ICheckoutService
 
     public void ScanItem(string item)
     {
-        if (_items.ContainsKey(item))
+        if (!_items.TryAdd(item, 1))
         {
             _items[item]++;
-        }
-        else
-        {
-            _items[item] = 1;
         }
     }
 
     public void RemoveItem(string item)
     {
-        if (!_items.ContainsKey(item))
+        if (!_items.TryGetValue(item, out int quantity))
             return;
 
-        if (_items[item] > 1)
-            _items[item]--;
+        if (quantity > 1)
+            _items[item] = --quantity;
         else
             _items.Remove(item);
     }
@@ -33,17 +29,10 @@ public class CheckoutService(IProductCatalogue products) : ICheckoutService
     public int Total()
     {
         int total = 0;
-        foreach ((string itemName, int quantity) in _items)
+        foreach ((string itemName, int quantity) in _items.Where(i => _products.Contains(i.Key)))
         {
-            try
-            {
-                IItem item = _products.GetItem(itemName);
-                total += item.CalculatePrice(quantity);
-            }
-            catch (KeyNotFoundException)
-            {
-                continue;
-            }
+            IItem item = _products.GetItem(itemName);
+            total += item.CalculatePrice(quantity);
         }
         return total;
     }
