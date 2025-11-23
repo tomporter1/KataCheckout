@@ -4,7 +4,7 @@ public class MultiBuyItem(int unitPrice, int discountQuantity, int discountPrice
 {
     public override int CalculatePrice(int quantity)
     {
-        if (quantity > discountQuantity)
+        if (quantity < discountQuantity)
             return base.CalculatePrice(quantity);
         return discountPrice;
     }
