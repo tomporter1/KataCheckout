@@ -35,8 +35,15 @@ public class CheckoutService(IProductCatalogue products) : ICheckoutService
         int total = 0;
         foreach ((string itemName, int quantity) in _items)
         {
-            IItem item = _products.GetItem(itemName);
-            total += item.CalculatePrice(quantity);
+            try
+            {
+                IItem item = _products.GetItem(itemName);
+                total += item.CalculatePrice(quantity);
+            }
+            catch (KeyNotFoundException)
+            {
+                continue;
+            }
         }
         return total;
     }
