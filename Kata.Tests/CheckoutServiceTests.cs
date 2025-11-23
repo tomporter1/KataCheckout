@@ -1,4 +1,6 @@
 ﻿using Kata.Checkout;
+using Kata.Checkout.Helpers;
+using Kata.Checkout.Items;
 using NUnit.Framework;
 
 namespace Kata.Tests;
@@ -14,11 +16,13 @@ namespace Kata.Tests;
 public class CheckoutServiceTests
 {
     ICheckoutService checkoutService;
+    IProductCatalogue productCatalogue;
 
     [SetUp]
     public void Setup()
     {
-        checkoutService = new CheckoutService();
+        productCatalogue = DefaultProductCatalogue.MakeDefault();
+        checkoutService = new CheckoutService(productCatalogue);
     }
 
     [Test]
@@ -115,5 +119,11 @@ public class CheckoutServiceTests
         Assert.That(checkoutService.Total(), Is.EqualTo(130));
         checkoutService.RemoveItem("A");
         Assert.That(checkoutService.Total(), Is.EqualTo(50 + 50));
+    }
+
+    [Test]
+    private void Remove_Non_Existent_Item_Does_Nothing()
+    {
+        checkoutService.RemoveItem("A");
     }
 }

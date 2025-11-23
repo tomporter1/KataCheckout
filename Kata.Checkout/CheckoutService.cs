@@ -1,24 +1,43 @@
-﻿namespace Kata.Checkout;
+﻿using Kata.Checkout.Items;
 
-public class CheckoutService: ICheckoutService
+namespace Kata.Checkout;
+
+public class CheckoutService(IProductCatalogue products) : ICheckoutService
 {
-    public CheckoutService()
-    {
-        
-    }
+    private readonly Dictionary<string, int> _items = new();
+    private readonly IProductCatalogue _products = products;
 
     public void ScanItem(string item)
     {
-        throw new NotImplementedException();
+        if (_items.ContainsKey(item))
+        {
+            _items[item]++;
+        }
+        else
+        {
+            _items[item] = 1;
+        }
     }
 
     public void RemoveItem(string item)
     {
-        throw new NotImplementedException();
+        if (!_items.ContainsKey(item))
+            return;
+
+        if (_items[item] > 1)
+            _items[item]--;
+        else
+            _items.Remove(item);
     }
 
     public float Total()
     {
-        throw new NotImplementedException();
+        float total = 0;
+        foreach ((string itemName, int quantity) in _items)
+        {
+            IItem item = _products.GetItem(itemName);
+            total += item.CalculatePrice(quantity);
+        }
+        return total;
     }
 }
