@@ -6,6 +6,22 @@ public class MultiBuyItem(int unitPrice, int discountQuantity, int discountPrice
     {
         if (quantity < discountQuantity)
             return base.CalculatePrice(quantity);
-        return discountPrice;
+
+        int discountedPrice = 0;
+        int remainingQuantity = quantity;
+        while (remainingQuantity > 0)
+        {
+            if (remainingQuantity >= discountQuantity)
+            {
+                discountedPrice += discountPrice;
+                remainingQuantity -= discountQuantity;
+            }
+            else
+            {
+                discountedPrice += base.CalculatePrice(remainingQuantity);
+                remainingQuantity = 0;
+            }
+        }
+        return discountedPrice;
     }
 }
