@@ -1,6 +1,4 @@
-﻿using Kata.Checkout;
-using Kata.Checkout.Helpers;
-using Kata.Checkout.Items;
+﻿using Kata.Tests.Discounts;
 using NUnit.Framework;
 
 namespace Kata.Tests;
@@ -13,18 +11,8 @@ namespace Kata.Tests;
 // C     20
 // D     15
 
-public class CheckoutServiceTests
+public class CheckoutServiceTests : CheckoutTestFixture
 {
-    ICheckoutService checkoutService;
-    IProductCatalogue productCatalogue;
-
-    [SetUp]
-    public void Setup()
-    {
-        productCatalogue = DefaultProductCatalogue.MakeDefault();
-        checkoutService = new CheckoutService(productCatalogue);
-    }
-
     [Test]
     public void Empty_Basket_Returns_Zero()
     {
@@ -70,26 +58,6 @@ public class CheckoutServiceTests
     }
 
     [Test]
-    public void Special_Offer_Applies()
-    {
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130));
-    }
-
-    [Test]
-    public void Multiple_Special_Offers_Apply()
-    {
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("B");
-        checkoutService.ScanItem("B");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130 + 45));
-    }
-
-    [Test]
     public void Remove_Item_Reduces_Total()
     {
         checkoutService.ScanItem("A");
@@ -111,17 +79,6 @@ public class CheckoutServiceTests
     }
 
     [Test]
-    public void Remove_Promo_Item_Removes_Promo()
-    {
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130));
-        checkoutService.RemoveItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(50 + 50));
-    }
-
-    [Test]
     public void Remove_Non_Existent_Item_Does_Nothing()
     {
         checkoutService.RemoveItem("A");
@@ -136,18 +93,6 @@ public class CheckoutServiceTests
         checkoutService.ScanItem("C");
         checkoutService.ScanItem("D");
         Assert.That(checkoutService.Total(), Is.EqualTo(50 + 30 + 20 + 15));
-    }
-
-    [Test]
-    public void Multiple_Complete_Offers()
-    {
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130 + 130));
     }
 
     [Test]
@@ -228,25 +173,10 @@ public class CheckoutServiceTests
     }
 
     [Test]
-    public void Large_Quantity_Of_Single_Item()
+    public void Large_Quantity_Of_Single_Item_Without_Discount()
     {
         for (int i = 0; i < 10; i++)
-            checkoutService.ScanItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130 + 130 + 130 + 50));
-    }
-
-    [Test]
-    public void Remove_From_Discounted_Bundle_Then_Readd()
-    {
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        checkoutService.ScanItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130));
-
-        checkoutService.RemoveItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(100));
-
-        checkoutService.ScanItem("A");
-        Assert.That(checkoutService.Total(), Is.EqualTo(130));
+            checkoutService.ScanItem("D");
+        Assert.That(checkoutService.Total(), Is.EqualTo(15 * 10));
     }
 }
