@@ -30,9 +30,9 @@ public class CheckoutService(IProductCatalogue products) : ICheckoutService
             _items.Remove(item);
     }
 
-    public float Total()
+    public int Total()
     {
-        float total = 0;
+        int total = 0;
         foreach ((string itemName, int quantity) in _items)
         {
             IItem item = _products.GetItem(itemName);
